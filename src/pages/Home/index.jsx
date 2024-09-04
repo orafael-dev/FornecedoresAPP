@@ -1,20 +1,24 @@
-import { Link } from 'react-router-dom'
-import { Card, Container, Header, ListContainer, InputSearchContainer } from "./styles";
+import { Link } from "react-router-dom";
+import {
+  Card,
+  Container,
+  Header,
+  ListContainer,
+  InputSearchContainer,
+} from "./styles";
 import arrow from "../../assets/images/icons/arrow.svg";
 import edit from "../../assets/images/icons/edit.svg";
 import trash from "../../assets/images/icons/trash.svg";
-import Modal from '../../components/Modal';
-
 
 export default function Home() {
   return (
-
     <>
       <Container>
-        <Modal danger />
-      <InputSearchContainer>
-        <input type="text" placeholder="Pesquise um contato..." />
-      </InputSearchContainer>
+        {/* <Loader /> */}
+        {/* <Modal danger /> */}
+        <InputSearchContainer>
+          <input type="text" placeholder="Pesquise um contato..." />
+        </InputSearchContainer>
         <Header>
           <strong>3 contatos</strong>
           <Link to="/new">Novo contato</Link>
@@ -41,7 +45,7 @@ export default function Home() {
 
           <div className="actions">
             <Link to="/edit/123">
-            <img src={edit} alt="Editar" height="24px" />
+              <img src={edit} alt="Editar" height="24px" />
             </Link>
 
             <button type="button">
@@ -49,8 +53,7 @@ export default function Home() {
             </button>
           </div>
         </Card>
-
       </ListContainer>
     </>
-  )
+  );
 }

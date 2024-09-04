@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Container, Overlay, Footer } from "./styles";
 import Button from "../Button";
 
-export default function Modal({ danger }) {
+export default function Modal({ danger = false }) {
   return ReactDOM.createPortal(
     <Overlay>
       <Container danger={danger}>
@@ -12,7 +12,6 @@ export default function Modal({ danger }) {
 
         <Footer>
           <button type="button" className="cancel-button">
-            {" "}
             Cancelar
           </button>
 
@@ -26,9 +25,9 @@ export default function Modal({ danger }) {
   );
 }
 
-Modal.propTypes = {
-  danger: PropTypes.bool,
-};
+// Modal.propTypes = {
+//   danger: PropTypes.bool,
+// };
 
 Modal.defaultProps = {
   danger: false,

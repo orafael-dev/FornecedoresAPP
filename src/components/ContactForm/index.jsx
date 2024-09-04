@@ -1,19 +1,26 @@
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import FormGroup from "../FormGroup";
 import { Form, ButtonContainer } from "./styles";
 import Input from "../Input";
 import Select from "../Select";
-import Button from '../Button'
+import Button from "../Button";
+import { useState } from "react";
 
 export default function ContactForm({ buttonLabel }) {
+  const [name, setName] = useState('');
+
   return (
     <Form>
       <FormGroup>
-        <Input placeholder="Nome" />
+        <Input
+        value={name}
+        placeholder="Nome"
+        onChange={(e) => setName(e.target.value) }
+        />
       </FormGroup>
 
-      <FormGroup>
-        <Input placeholder="Email" />
+      <FormGroup error="Formato de e-mail inválido.">
+        <Input placeholder="Email" error="null" />
       </FormGroup>
 
       <FormGroup>
@@ -26,13 +33,13 @@ export default function ContactForm({ buttonLabel }) {
         </Select>
       </FormGroup>
 
-    <ButtonContainer>
-    <Button type="submit">{buttonLabel}</Button>
-    </ButtonContainer>
+      <ButtonContainer>
+        <Button type="submit">{buttonLabel}</Button>
+      </ButtonContainer>
     </Form>
   );
 }
 
 ContactForm.propTypes = {
-  buttonLabel: PropTypes.string.isRequired
-}
+  buttonLabel: PropTypes.string.isRequired,
+};
