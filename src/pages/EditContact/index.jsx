@@ -1,3 +1,14 @@
+import ContactForm from "../../components/ContactForm";
+import PageHeader from "../../components/PageHeader";
+
 export default function EditContact() {
-  return 'EditContact'
+  return (
+    <>
+    <PageHeader
+    title="Editar Rafael Almeida" />
+
+    <ContactForm
+    buttonLabel="Salvar alterações" />
+    </>
+  )
 }
