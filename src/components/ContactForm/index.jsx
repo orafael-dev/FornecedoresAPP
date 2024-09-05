@@ -80,7 +80,7 @@ export default function ContactForm({ buttonLabel }) {
 
       <FormGroup error={getErrorMessageByFieldName('email')} >
         <Input
-        error={getErrorMessageByFieldName('name')}
+        error={getErrorMessageByFieldName('email')}
         placeholder="Email"
         value={email}
         onChange={handleEmailChange}
