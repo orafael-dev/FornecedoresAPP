@@ -13,7 +13,7 @@ import edit from "../../assets/images/icons/edit.svg";
 import trash from "../../assets/images/icons/trash.svg";
 
 import Loader from "../../components/Loader";
-import delay from "../../utils/delay";
+import ContactsServices from "../../services/ContactsService";
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -30,20 +30,21 @@ export default function Home() {
   );
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
-      .then(async (response) => {
-        await delay(500);
+    async function loadContacts() {
+      try {
+        setIsLoading(true);
 
-        const json = await response.json();
-        setContacts(json);
-      })
-      .catch((error) => {
-        console.log("erro", error);
-      })
-      .finally(() => {
+        const contactsList = await ContactsServices.listContacts(orderBy);
+
+        setContacts(contactsList);
+      } catch (error) {
+        console.log("caiu no Catch: ", error);
+      } finally {
         setIsLoading(false);
-      })
+      }
+    }
+
+    loadContacts();
   }, [orderBy]);
 
   function handleToggleOrderBy() {
