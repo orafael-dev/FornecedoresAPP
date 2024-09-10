@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState, useImperativeHandle } from "react";
 
 import isEmailValid from "../../utils/isEmailValid";
 import formatPhone from "../../utils/formatPhone";
@@ -13,7 +13,7 @@ import Input from "../Input";
 import Select from "../Select";
 import Button from "../Button";
 
-export default function ContactForm({ buttonLabel, onSubmit }) {
+const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -28,7 +28,26 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
   const isFormValid =
     name && errors.length === 0 && email && phone.length >= 14;
 
-  useEffect(() => {
+  useImperativeHandle(
+    ref,
+    () => ({
+      setFieldsValues: (contact) => {
+        setName(contact.name ?? '');
+        setEmail(contact.email ?? '');
+        setPhone(formatPhone(contact.phone ?? ''));
+        setCategoryId(contact.category_id ?? '');
+      },
+      resetFields: () => {
+        setName('');
+        setEmail('');
+        setPhone('');
+        setCategoryId('')
+      },
+    }),
+    []
+  );
+
+    useEffect(() => {
     async function loadCategories() {
       try {
         const categoriesList = await CategoriesService.listCategories();
@@ -70,7 +89,6 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
     event.preventDefault();
 
     setIsSubmitting(true);
-
     await onSubmit({ name, email, phone, categoryId });
 
     setIsSubmitting(false);
@@ -112,7 +130,6 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
       <FormGroup isLoading={isLoadingCategories}>
         <Select
           disabled={isLoadingCategories || isSubmitting}
-          placeholder="Nome"
           value={categoryId}
           onChange={(event) => setCategoryId(event.target.value)}
         >
@@ -120,7 +137,6 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
 
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
-              {" "}
               {category.name}
             </option>
           ))}
@@ -128,19 +144,17 @@ export default function ContactForm({ buttonLabel, onSubmit }) {
       </FormGroup>
 
       <ButtonContainer>
-        <Button
-        type="submit"
-        disabled={!isFormValid}
-        isLoading={isSubmitting}
-        >
+        <Button type="submit" disabled={!isFormValid} isLoading={isSubmitting}>
           {buttonLabel}
         </Button>
       </ButtonContainer>
     </Form>
   );
-}
+});
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
+
+export default ContactForm;

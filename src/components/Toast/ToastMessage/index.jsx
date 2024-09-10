@@ -7,7 +7,6 @@ import { useEffect } from "react";
 export default function ToastMessage({ message, onRemoveMessage }) {
   useEffect(() => {
     const timeoutID = setTimeout(() => {
-      console.log('Timeout executou...')
       onRemoveMessage(message.id);
     }, message.duration || 5000);
 

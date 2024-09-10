@@ -7,7 +7,6 @@ import Routes from "../../Routes";
 import ToastContainer from "../Toast/ToastContainer";
 
  function App() {
-  console.log('APP renderizou')
   return (
     <ThemeProvider theme={defaultTheme}>
     <GlobalStyles />
