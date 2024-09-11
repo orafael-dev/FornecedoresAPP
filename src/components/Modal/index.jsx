@@ -3,20 +3,44 @@ import ReactDOM from "react-dom";
 import { Container, Overlay, Footer } from "./styles";
 import Button from "../Button";
 
-export default function Modal({ danger = false }) {
+export default function Modal({
+  danger = false,
+  isLoading = false,
+  visible,
+  title,
+  children,
+  cancelLabel = "Cancelar",
+  confirmLabel = "Confirmar",
+  onCancel,
+  onConfirm,
+}) {
+
+  if (!visible) {
+    return null
+  }
   return ReactDOM.createPortal(
     <Overlay>
       <Container danger={danger}>
-        <h1>Título</h1>
-        <p>Corpo do modal</p>
+        <h1>{title}</h1>
+        <div className="modal-body">{children}</div>
 
         <Footer>
-          <button type="button" className="cancel-button">
-            Cancelar
+          <button
+          type="button"
+          className="cancel-button"
+          onClick={onCancel}
+          disabled={isLoading}
+          >
+            {cancelLabel}
           </button>
 
-          <Button type="button" danger={danger}>
-            Deletar
+          <Button
+          type="button"
+          danger={danger}
+          onClick={onConfirm}
+          isLoading={isLoading}
+          >
+            {confirmLabel}
           </Button>
         </Footer>
       </Container>
@@ -25,10 +49,14 @@ export default function Modal({ danger = false }) {
   );
 }
 
-// Modal.propTypes = {
-//   danger: PropTypes.bool,
-// };
-
-Modal.defaultProps = {
-  danger: false,
+Modal.propTypes = {
+  danger: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  visible: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  cancelLabel: PropTypes.string,
+  confirmLabel: PropTypes.string,
+  onCancel: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
 };

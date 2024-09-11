@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(2px);
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   left: 0;
@@ -20,17 +20,17 @@ export const Container = styled.div`
   max-width: 450px;
   width: 100%;
 
-  h1{
+  > h1{
     font-size: 22px;
     color: ${({ theme, danger }) => (
       danger ? theme.colors.danger.main : theme.colors.gray[900]
     )}
   }
 
-  p {
-    margin-top: 8px;
-
+  .modal-body {
+    margin-top: 32px;
   }
+
 `
 export const Footer = styled.div`
   margin-top: 32px;
@@ -42,7 +42,11 @@ export const Footer = styled.div`
     background: transparent;
     border: none;
     font-size: 16px;
-    margin-right: 8px;
+    margin-right: 24px;
     color: ${({  theme}) => theme.colors.gray[200]}
+
+  }
+  .cancel-button[disabled] {
+    cursor: not-allowed;
   }
 `
