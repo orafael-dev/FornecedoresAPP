@@ -136,7 +136,7 @@ export default function Home() {
       )}
 
       <Header
-        justifyContent={
+        justifycontent={
           hasError
             ? "flex-end"
             : contacts.length > 0
