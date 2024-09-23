@@ -1,4 +1,3 @@
-import delay from "../utils/delay";
 import HttpClient from "./utils/HttpClient";
 
 class ContactsService {
@@ -11,7 +10,6 @@ class ContactsService {
   }
 
   async getContactById(id) {
-    await delay(3000)
     return this.httpClient.get(`/contacts/${id}`)
   }
 
